@@ -4,21 +4,26 @@
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>{% block title %}My Portfolio{% endblock %}</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>
+    {% block title %}
+    Data-Driven Discoveries: Insights and Innovations in Education and Science
+    {% endblock %}
+  </title>
+
+  <meta name="description" content="Your personal portfolio">
+  <meta name="keywords" content="portfolio, personal, bootstrap, template">
 
   <!-- Favicons -->
-  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/favicon.ico' %}" rel="icon">
   <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet" >
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
@@ -31,8 +36,6 @@
   <!-- =======================================================
   * Template Name: iPortfolio
   * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Updated: Mar 17 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
@@ -47,7 +50,7 @@
     <div class="d-flex flex-column">
 
       <div class="profile">
-        <img src=" {% static 'assets/img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle">
+        <img src="{% static 'assets/img/alton-img.jpg' %}" alt="" class="img-fluid rounded-circle">
         <h1 class="text-light"><a href="{% url 'home' %}">Alton V. Kesselly</a></h1>
         <div class="social-links mt-3 text-center">
           <a href="https://twitter.com/kessellyalton" target="_blank" rel="noopener noreferrer"  class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -65,31 +68,33 @@
           <li><a href="{% url 'resume' %}" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
           <li><a href="{% url 'portfolio' %}" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
           <li><a href="{% url 'services' %}" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>
-          <li><a href="{% url 'blog' %}" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Blog</span></a></li>
+          <li><a href="{% url 'blog' %}" class="nav-link scrollto"><i class="bx bx-server"></i> <span>blog</span></a></li>
           <li><a href="{% url 'contact' %}" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
         </ul>
       </nav><!-- .nav-menu -->
     </div>
   </header><!-- End Header -->
 
+  <main id="main">
+    {% block content %}
+    {% endblock %}
+  </main><!-- End #main -->
 
-
-   {% block content %}{% endblock %}
-
-    <footer id="footer">
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
     <div class="container">
       <div class="copyright">
-        &copy; Copyright   2024 Alton V. Kesselly. All Rights Reserved.<strong><span>Portfolio</span></strong>
+       <p> &copy; Copyright 2024</p>
+        <p><strong><span>Alton Kesselly</span></strong></p>
       </div>
-
     </div>
-  </footer><!-- End  Footer -->
+  </footer><!-- End Footer -->
 
-  <a href="{% url 'home' %}" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
-  <script src="{% static 'assets/vendor/aos/aos.js"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
   <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>

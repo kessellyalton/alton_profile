@@ -1,14 +1,28 @@
 body, html {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;  /* Updated font-family to match Google Fonts */
+    height: 100%; /* Full height */
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
 }
 
-header {
+#header {
     background: #333;
     color: #fff;
     padding: 10px 20px;
     text-align: center;
+    width: 250px; /* Fixed width */
+    position: fixed; /* Fixed position */
+    height: 100%; /* Full height */
+    overflow-y: auto; /* Adds scroll to sidebar if content overflows */
+}
+
+#navbar {
+    margin-top: 150px; /* Adjusted margin to push nav below header content */
+    margin-bottom: 300px;
+    padding-bottom: 80px; /* Extra space for scrolling above footer */
+    padding-left: 80px;
+
 }
 
 nav ul {
@@ -17,18 +31,19 @@ nav ul {
 }
 
 nav ul li {
-    display: inline;
-    margin-right: 10px;
+    margin-bottom: 10px; /* Added space between links */
 }
 
 nav ul li a {
     color: #fff;
     text-decoration: none;
+    display: block; /* Makes the entire area clickable */
 }
 
-section {
+main {
+    margin-left: 250px; /* Offset for sidebar */
     padding: 20px;
-    margin-top: 20px;
+    min-height: 100vh; /* Full view height */
 }
 
 footer {
@@ -37,21 +52,19 @@ footer {
     background: #333;
     color: white;
     position: fixed;
-    width: 100%;
+    width: calc(100% - 250px); /* Adjust width */
+    top: 10px;
     bottom: 0;
+    right: 0; /* Align to the right */
 }
 
-form input, form textarea {
+form input, form textarea, form button {
     width: 100%;
-    margin-bottom: 10px;
     padding: 10px;
 }
 
 form button {
-    width: 100%;
-    padding: 10px;
     background: navy;
-    color: white;
     border: none;
 }
 
