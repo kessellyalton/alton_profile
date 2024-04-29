@@ -3,7 +3,7 @@
 {% block title %}Blog{% endblock %}
 
 {% block content %}
-    <p>This page tells you all about the Blog.</p>
+
 
     <div id="layoutDefault">
         <div id="layoutDefault_content">
@@ -21,16 +21,7 @@
                                         <h5 class="card-title">{{ post.title }}</h5>
                                         <p class="card-text">{{ post.content|truncatewords:20 }}</p>
                                     </div>
-                                    <div class="card-footer">
-                                        <div class="post-preview-meta">
-                                            <!-- Placeholder image for the author, consider storing author images in the model or using a default -->
-                                            <img class="post-preview-meta-img" src="{% static 'assets/img/illustrations/profiles/profile-2.png' %}" />
-                                            <div class="post-preview-meta-details">
-                                                <div class="post-preview-meta-details-name">{{ post.author }}</div>
-                                                <div class="post-preview-meta-details-date">{{ post.date_posted|date:"M d · Y" }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </a>
                             </div>
                         {% empty %}

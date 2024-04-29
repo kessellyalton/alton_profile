@@ -7,6 +7,9 @@ class Blog(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)  # Optional image field
 
+    class Meta:
+        ordering = ['-date_posted']
+
     def __str__(self):
         return self.title
 

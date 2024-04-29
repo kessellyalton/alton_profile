@@ -31,7 +31,7 @@ nav ul {
 }
 
 nav ul li {
-    margin-bottom: 10px; /* Added space between links */
+    margin-bottom: 2px; /* Added space between links */
 }
 
 nav ul li a {
@@ -53,7 +53,7 @@ footer {
     color: white;
     position: fixed;
     width: calc(100% - 250px); /* Adjust width */
-    top: 10px;
+    top: 5px;
     bottom: 0;
     right: 0; /* Align to the right */
 }
