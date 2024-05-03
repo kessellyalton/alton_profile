@@ -14,7 +14,7 @@
     </div>
     {% endif %}
     <div class="blog-content mt-4">
-        {{ post.content }}
+        {{ post.content|safe }}
     </div>
 </div>
 {% endblock %}
