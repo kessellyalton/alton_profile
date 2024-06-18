@@ -1,6 +1,7 @@
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 import bleach
+from django.urls import reverse
 
 class Blog(models.Model):
     title = models.CharField(max_length=200)
@@ -10,8 +11,12 @@ class Blog(models.Model):
     image = models.ImageField(upload_to='blog_images/', blank=True, null=True)  # Optional image field
 
     def save(self, *args, **kwargs):
-        self.content = bleach.clean(self.content, tags=['p', 'strong', 'em', 'a'], attributes={'a': ['href', 'title']},
-                                    strip=True)
+        self.content = bleach.clean(
+            self.content,
+            tags=['p', 'strong', 'em', 'a'],
+            attributes={'a': ['href', 'title']},
+            strip=True
+        )
         super().save(*args, **kwargs)
 
     class Meta:
@@ -20,3 +25,15 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('blog-detail', args=[self.pk])
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
+from django.contrib.messages import constants as messages
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +43,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'myprofile',
     'django_ckeditor_5',
+    'crispy_forms',
+    'crispy_bootstrap4',
+
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -51,6 +58,14 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
 
 ROOT_URLCONF = "myproject.urls"
 
@@ -139,3 +154,20 @@ CKEDITOR_5_CONFIGS = {
         'language': 'en'
     },
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+
+DEFAULT_FROM_EMAIL = 'kessellyalton1@gmail.com'
+CONTACT_EMAIL = 'kessellyalton1@gmail.com'  # Set this to the email address you want to receive contact form submissions
+
+
+
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

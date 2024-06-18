@@ -17,4 +17,10 @@
         {{ post.content|safe }}
     </div>
 </div>
+<p>
+    <a href="{% url 'post_share' post.id %}">
+        Share this post
+    </a>
+</p>
 {% endblock %}
+
