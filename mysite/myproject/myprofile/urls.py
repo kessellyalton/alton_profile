@@ -25,6 +25,12 @@ urlpatterns = [
     path('portfolio-details-asc/', views.portfolio_details_asc, name='portfolio-details-asc'),
     path('portfolio-details-esp/', views.portfolio_details_esp, name='portfolio-details-esp'),
     path('portfolio-details-emergency/', views.portfolio_details_emergency, name='portfolio-details-emergency'),
+    path('upload/', views.upload_pdf, name='upload_pdf'),
+    path('pdfs/', views.pdf_list, name='pdf_list'),
+    path('download/<int:pk>/', views.download_pdf, name='download_pdf'),
 
 
 ]
+
+
+

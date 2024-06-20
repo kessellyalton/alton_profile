@@ -1,26 +1,16 @@
-from django.shortcuts import render, redirect, get_object_or_404
+import logging
+import os
+
+from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.conf import settings
-from django.http import FileResponse
-from .forms import EmailPostForm, ContactForm, UploadFileForm
-from .models import Blog, Resume
-import logging
-import os
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import FileResponse, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
+
+from .forms import EmailPostForm, ContactForm, UploadFileForm, PDFFileForm
+from .models import Blog, Resume, PDFFile
 
 logger = logging.getLogger(__name__)
-
-from django.shortcuts import render, redirect
-from django.http import FileResponse, HttpResponse
-from .forms import UploadFileForm
-from .models import Resume
-from django.conf import settings
-import os
-import logging
-
-logger = logging.getLogger(__name__)
-
 
 def upload_resume(request):
     if request.method == 'POST':
@@ -31,7 +21,6 @@ def upload_resume(request):
     else:
         form = UploadFileForm()
     return render(request, 'myprofile/upload.html', {'form': form})
-
 
 def download_resume(request):
     try:
@@ -50,37 +39,23 @@ def download_resume(request):
         logger.error(f"Error opening file: {e}")
         return HttpResponse("Error opening file", status=500)
 
-
 def upload_success(request):
     return render(request, 'myprofile/upload_success.html')
-
 
 def resume_view(request):
     return render(request, 'myprofile/resume.html')
 
-
-
-
-
-
-
-
-
 def home(request):
     return render(request, 'myprofile/home.html')
-
 
 def about(request):
     return render(request, 'myprofile/about.html')
 
-
 def portfolio(request):
     return render(request, 'myprofile/portfolio.html')
 
-
 def services(request):
     return render(request, 'myprofile/services.html')
-
 
 def blog_list(request):
     posts = Blog.objects.all()
@@ -94,15 +69,12 @@ def blog_list(request):
         posts_1 = paginator.page(paginator.num_pages)
     return render(request, 'myprofile/blog.html', {'posts': posts_1})
 
-
 def blog_detail(request, pk):
     post = get_object_or_404(Blog, pk=pk)
     return render(request, 'myprofile/blog-detail.html', {'post': post})
 
-
 def testimonials(request):
     return render(request, 'myprofile/testimonials.html')
-
 
 def portfolio_details(request):
     return render(request, 'myprofile/portfolio-details.html')
@@ -116,7 +88,6 @@ def portfolio_details_web(request):
 def portfolio_details_card(request):
     return render(request, 'myprofile/portfolio-details-card.html')
 
-
 def portfolio_details_asc(request):
     return render(request, 'myprofile/portfolio-details-asc.html')
 
@@ -126,10 +97,8 @@ def portfolio_details_esp(request):
 def portfolio_details_emergency(request):
     return render(request, 'myprofile/portfolio-details-emergency.html')
 
-
 def contact(request):
     return render(request, 'myprofile/contact.html')
-
 
 def post_share(request, post_id):
     post_1 = get_object_or_404(Blog, pk=post_id)
@@ -148,10 +117,8 @@ def post_share(request, post_id):
         form = EmailPostForm()
     return render(request, 'myprofile/post_share.html', {'form': form, 'post': post_1, 'sent': sent})
 
-
 def thank_you(request):
     return render(request, 'myprofile/thank_you.html')
-
 
 def submit_form_1(request):
     if request.method == 'POST':
@@ -173,7 +140,26 @@ def submit_form_1(request):
             return redirect('thank_you')
         except Exception as e:
             logger.error(f"Error sending email: {e}")
-            return render(request, 'myprofile/contact.html',
-                          {'error_message': 'There was an error sending your email. Please try again later.'})
+            return render(request, 'myprofile/contact.html', {'error_message': 'There was an error sending your email. Please try again later.'})
 
     return render(request, 'myprofile/contact.html')
+
+def upload_pdf(request):
+    if request.method == 'POST':
+        form = PDFFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('pdf_list')
+    else:
+        form = PDFFileForm()
+    return render(request, 'upload_pdf.html', {'form': form})
+
+def pdf_list(request):
+    pdfs = PDFFile.objects.all()
+    return render(request, 'pdf_list.html', {'pdfs': pdfs})
+
+def download_pdf(request, pk):
+    pdf = get_object_or_404(PDFFile, pk=pk)
+    response = HttpResponse(pdf.file, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{pdf.file.name}"'
+    return response
