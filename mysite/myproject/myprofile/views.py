@@ -117,6 +117,16 @@ def portfolio_details_card(request):
     return render(request, 'myprofile/portfolio-details-card.html')
 
 
+def portfolio_details_asc(request):
+    return render(request, 'myprofile/portfolio-details-asc.html')
+
+def portfolio_details_esp(request):
+    return render(request, 'myprofile/portfolio-details-esp.html')
+
+def portfolio_details_emergency(request):
+    return render(request, 'myprofile/portfolio-details-emergency.html')
+
+
 def contact(request):
     return render(request, 'myprofile/contact.html')
 

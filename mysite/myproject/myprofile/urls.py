@@ -18,7 +18,13 @@ urlpatterns = [
     path('upload/', views.upload_resume, name='upload_resume'),
     path('download/', views.download_resume, name='download_resume'),
     path('upload/success/', views.upload_success, name='upload_success'),
-path('portfolio-details-app/', views.portfolio_details_app, name='portfolio-details-app'),
-path('portfolio-details-web/', views.portfolio_details_web, name='portfolio-details-web'),
-path('portfolio-details-card/', views.portfolio_details_card, name='portfolio-details-card'),
+    path('portfolio-details-app/', views.portfolio_details_app, name='portfolio-details-app'),
+    path('portfolio-details-web/', views.portfolio_details_web, name='portfolio-details-web'),
+    path('portfolio-details-card/', views.portfolio_details_card, name='portfolio-details-card'),
+
+    path('portfolio-details-asc/', views.portfolio_details_asc, name='portfolio-details-asc'),
+    path('portfolio-details-esp/', views.portfolio_details_esp, name='portfolio-details-esp'),
+    path('portfolio-details-emergency/', views.portfolio_details_emergency, name='portfolio-details-emergency'),
+
+
 ]
