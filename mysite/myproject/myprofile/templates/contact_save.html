@@ -191,3 +191,48 @@ def contact_page(request):
 
 def thank_you(request):
     return render(request, 'myprofile/thank.html')
+
+
+ <!-- File Upload Section -->
+    <section id="file-upload" class="file-upload">
+      <div class="container">
+        <div class="section-title">
+          <h2>Upload Your Resume</h2>
+          <p>Feel free to upload a PDF version of your resume for download.</p>
+        </div>
+        <form action="{% url 'upload_resume' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="resume">Upload Resume (PDF):</label>
+            <input type="file" id="resume" name="resume" accept="application/pdf" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+    </section><!-- End File Upload Section -->
+
+<!-- File Upload Section -->
+    <section id="file-upload" class="file-upload">
+      <div class="container">
+        <div class="section-title">
+          <h2>Upload Your Resume</h2>
+          <p>Feel free to upload a PDF version of your resume for download.</p>
+        </div>
+        <form action="{% url 'upload_resume' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="resume">Upload Resume (PDF):</label>
+            <input type="file" id="resume" name="resume" accept="application/pdf" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+    </section><!-- End File Upload Section -->

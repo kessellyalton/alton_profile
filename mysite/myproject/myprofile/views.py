@@ -2,30 +2,85 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
-from django.contrib import messages
-from .forms import EmailPostForm, ContactForm
+from django.http import FileResponse
+from .forms import EmailPostForm, ContactForm, UploadFileForm
+from .models import Blog, Resume
 import logging
-from .models import Blog
-from django.urls import reverse
-from django.http import HttpResponse
-from django.template.loader import render_to_string
+import os
+from django.http import HttpResponse, HttpResponseRedirect
 
 logger = logging.getLogger(__name__)
+
+from django.shortcuts import render, redirect
+from django.http import FileResponse, HttpResponse
+from .forms import UploadFileForm
+from .models import Resume
+from django.conf import settings
+import os
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def upload_resume(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('upload_success')
+    else:
+        form = UploadFileForm()
+    return render(request, 'myprofile/upload.html', {'form': form})
+
+
+def download_resume(request):
+    try:
+        latest_resume = Resume.objects.latest('uploaded_at')
+        file_path = os.path.join(settings.MEDIA_ROOT, latest_resume.file.name)
+
+        if os.path.exists(file_path):
+            return FileResponse(open(file_path, 'rb'), as_attachment=True, content_type='application/pdf')
+        else:
+            logger.error(f"File not found: {file_path}")
+            return HttpResponse("File not found", status=404)
+    except Resume.DoesNotExist:
+        logger.error("No resume found in the database")
+        return HttpResponse("No resume found", status=404)
+    except Exception as e:
+        logger.error(f"Error opening file: {e}")
+        return HttpResponse("Error opening file", status=500)
+
+
+def upload_success(request):
+    return render(request, 'myprofile/upload_success.html')
+
+
+def resume_view(request):
+    return render(request, 'myprofile/resume.html')
+
+
+
+
+
+
+
+
 
 def home(request):
     return render(request, 'myprofile/home.html')
 
+
 def about(request):
     return render(request, 'myprofile/about.html')
 
-def resume(request):
-    return render(request, 'myprofile/resume.html')
 
 def portfolio(request):
     return render(request, 'myprofile/portfolio.html')
 
+
 def services(request):
     return render(request, 'myprofile/services.html')
+
 
 def blog_list(request):
     posts = Blog.objects.all()
@@ -39,15 +94,28 @@ def blog_list(request):
         posts_1 = paginator.page(paginator.num_pages)
     return render(request, 'myprofile/blog.html', {'posts': posts_1})
 
+
 def blog_detail(request, pk):
     post = get_object_or_404(Blog, pk=pk)
     return render(request, 'myprofile/blog-detail.html', {'post': post})
 
+
 def testimonials(request):
     return render(request, 'myprofile/testimonials.html')
 
+
 def portfolio_details(request):
     return render(request, 'myprofile/portfolio-details.html')
+
+def portfolio_details_app(request):
+    return render(request, 'myprofile/portfolio-details-app.html')
+
+def portfolio_details_web(request):
+    return render(request, 'myprofile/portfolio-details-web.html')
+
+def portfolio_details_card(request):
+    return render(request, 'myprofile/portfolio-details-card.html')
+
 
 def contact(request):
     return render(request, 'myprofile/contact.html')
@@ -71,16 +139,9 @@ def post_share(request, post_id):
     return render(request, 'myprofile/post_share.html', {'form': form, 'post': post_1, 'sent': sent})
 
 
-
-
-
 def thank_you(request):
     return render(request, 'myprofile/thank_you.html')
 
-
-
-
-logger = logging.getLogger(__name__)
 
 def submit_form_1(request):
     if request.method == 'POST':
@@ -102,6 +163,7 @@ def submit_form_1(request):
             return redirect('thank_you')
         except Exception as e:
             logger.error(f"Error sending email: {e}")
-            return render(request, 'contact.html', {'error_message': 'There was an error sending your email. Please try again later.'})
+            return render(request, 'myprofile/contact.html',
+                          {'error_message': 'There was an error sending your email. Please try again later.'})
 
-    return render(request, 'contact.html')
+    return render(request, 'myprofile/contact.html')
